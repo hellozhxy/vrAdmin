@@ -11,7 +11,7 @@
 									{"menuname":"添加用户","icon":"icon-add","url":"<%=path%>def"},
 									{"menuname":"用户管理","icon":"icon-users","url":"<%=path%>def"},
 									{"menuname":"角色管理","icon":"icon-role","url":"<%=path%>def"},
-									{"menuname":"权限设置","icon":"icon-set","url":"<%=path%>def"},
+									{"menuname":"权限设置","icon":"icon-set","url":"<%=path%>permission/addPermission"},
 									{"menuname":"系统日志","icon":"icon-log","url":"<%=path%>def"}
 								]
 						},{"menuid":"8","icon":"icon-sys","menuname":"员工管理",
@@ -156,11 +156,11 @@
                 <table cellpadding=3>
                     <tr>
                         <td>新密码：</td>
-                        <td><input id="txtNewPass" type="Password" class="txt01" /></td>
+                        <td><input id="txtNewPass" type="password" class="txt01" /></td>
                     </tr>
                     <tr>
                         <td>确认密码：</td>
-                        <td><input id="txtRePass" type="Password" class="txt01" /></td>
+                        <td><input id="txtRePass" type="password" class="txt01" /></td>
                     </tr>
                 </table>
             </div>
