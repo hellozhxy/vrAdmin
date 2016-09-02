@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>用户列表</title>
-	<link href="" rel="stylesheet"/>
+	<link type="text/css" rel="stylesheet" href="/"/>
 </head>
 <body>
 	<table id="user-table">
@@ -21,16 +21,29 @@
 			</tr>
 		</thead>
 	</table>
-	<div class="container">
-		<div class="pagination-right">
-			<c:if test="${permissions6==1}"><a class="btn btn-width4" href="/user/showAddUser?domain=${param.domain}" target="_self"><i></i><b>添加用户</b></a></c:if>
-		</div>
-		<div class="search-grid-container">
-			<div id="grid"></div>
+	<div style="text-align: center;padding: 5px;">
+		<a href="javascript:void(0)" onclick="saveUser()" id="btn-save" icon="icon-save">保存</a>
+		<a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" icon="icon-cancel">取消</a>
+	</div>
+	<div id="user-window" title="用户窗口" style="width: 400px;height:250px; ">
+		<div style="padding: 20px 20px 40px 80px">
+			<form method="post">
+				<table>
+					<tr>
+						<td>用户名</td>
+						<td><input name="name"></input></td>
+					</tr>
+					<tr>
+						<td>电话</td>
+						<td><input name="mobile"/></td>
+					</tr>
+					<tr>
+						<td>邮箱</td>
+						<td><input name="email"/></td>
+					</tr>
+				</table>
+			</form>
 		</div>
 	</div>
-	<script type="text/javascript">
-		var currentUcAccount = "${ucAccount}";
-	</script>
 </body>
 </html>

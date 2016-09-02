@@ -7,7 +7,7 @@
     <script type="text/javascript">
 	 var _menus = {"menus":[
 						{"menuid":"1","icon":"icon-sys","menuname":"系统管理",
-							"menus":[{"menuname":"菜单管理","icon":"icon-nav","url":"<%=path%>menu"},
+							"menus":[{"menuname":"菜单管理","icon":"icon-nav","url":"<%=path%>def"},
 									{"menuname":"添加用户","icon":"icon-add","url":"<%=path%>user/addUser"},
 									{"menuname":"用户管理","icon":"icon-users","url":"<%=path%>user/listUsers"},
 									{"menuname":"角色管理","icon":"icon-role","url":"<%=path%>role/listRoles"},
