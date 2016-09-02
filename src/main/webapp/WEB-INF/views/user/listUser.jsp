@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>用户列表</title>
-	<link href="http://qunarzz.com/flight_fuwu/prd/styles/release/bui/bui.css" rel="stylesheet"/>
+	<link href="" rel="stylesheet"/>
 </head>
 <body>
 	<table id="user-table">
@@ -30,9 +30,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	var currentUcAccount = "${ucAccount}";
+		var currentUcAccount = "${ucAccount}";
 	</script>
-    <script src="http://qunarzz.com/flight_fuwu/prd/scripts/release/bui/bui.js"></script>
-    <script src="http://qunarzz.com/flight_fuwu/prd/scripts/release/users.js"></script>
 </body>
 </html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vr.web.dao.RoleMapper">
+  <resultMap id="RoleMap" type="com.vr.web.model.RoleInfo">
+    <id column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="role_status" jdbcType="INTEGER" property="roleStatus" />
+  </resultMap>
+	  
+	
+	<select id="findAllUsers" resultMap="RoleMap">
+		select * 
+		from tb_role 
+	</select>
+	
+	<select id="findUserInfoById" resultMap="RoleMap">
+		select * 
+		from tb_user 
+		where user_id = ${userid}
+	</select>
+	
+</mapper>
