@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vr.web.dao.UserMapper">
+  <resultMap id="UserMap" type="com.vr.web.model.UserInfo">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+<!--     <result column="password" jdbcType="VARCHAR" property="password" /> -->
+<!--     <result column="password_salt" jdbcType="VARCHAR" property="passwordSalt" /> -->
+    <result column="user_img_url" jdbcType="VARCHAR" property="userImgUrl" />
+    <result column="user_sex" jdbcType="INTEGER" property="userSex" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="register_date" jdbcType="DATE" property="registerDate" />
+    <result column="last_login_date" jdbcType="DATE" property="lastLoginDate" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+	  
+	
+	<select id="findAllUsers" resultMap="UserMap">
+		select * 
+		from tb_user 
+	</select>
+	
+	<select id="findUserInfoById" resultMap="UserMap">
+		select * 
+		from tb_user 
+		where user_id = ${userid}
+	</select>
+	
+</mapper>

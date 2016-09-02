@@ -17,7 +17,7 @@
 	
 	<!-- 配置别名 -->
 	<typeAliases>
-		<typeAlias type="com.vr.web.model.PoJo" alias="PoJo"/>
+<!-- 		<typeAlias type="com.vr.web.model.PoJo" alias="PoJo"/> -->
     </typeAliases>
     
 </configuration>
