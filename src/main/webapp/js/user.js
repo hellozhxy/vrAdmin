@@ -1,6 +1,6 @@
 $(function(){
 	grid = $('#user-table').datagrid({
-		url:'/demo1/user/getUsers',
+		url:'/user/listUsers',
 		title:'用户资料',
 		width:600,
 		height:300,
@@ -32,14 +32,14 @@ var form;
 function newUser(){
 	win.window('open');
 	form.form('clear');
-	form.url = '/demo1/user/save';
+	form.url = '/user/save';
 }
 function editUser(){
 	var row = grid.datagrid('getSelected');
 	if (row){
 		win.window('open');
-		form.form('load', '/demo1/user/getUser/'+row.id);
-		form.url = '/demo1/user/update/'+row.id;
+		form.form('load', '/user/getUser/'+row.id);
+		form.url = '/user/update/'+row.id;
 	} else {
 		$.messager.show({
 			title:'警告', 
