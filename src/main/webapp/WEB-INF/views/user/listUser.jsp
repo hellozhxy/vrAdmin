@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户列表</title>
 	<link type="text/css" rel="stylesheet" href="/js/themes/default/easyui.css">
 	<link type="text/css" rel="stylesheet" href="/js/themes/icon.css">
-	<link type="text/css" rel="stylesheet" href="/css/main.css">
-	<script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="/js/jquery.min.js"></script>
+<!-- 	<link type="text/css" rel="stylesheet" href="/css/main.css"> -->
+	<script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="/js/user.js"></script>
 </head>
 <body>
@@ -26,8 +26,9 @@
 			</tr>
 		</thead>
 	</table>
-	<div id="user-window" title="用户窗口" style="width: 400px;height:250px; ">
-		<div style="padding: 20px 20px 40px 80px">
+	
+	<div id="user-window" title="用户窗口" style="width:400px;height:250px;">
+		<div style="padding:20px 20px 40px 80px;">
 			<form method="post">
 				<table>
 					<tr>
@@ -45,10 +46,10 @@
 				</table>
 			</form>
 		</div>
-	<div style="text-align: center;padding: 5px;">
-		<a href="javascript:void(0)" onclick="saveUser()" id="btn-save" icon="icon-save">保存</a>
-		<a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" icon="icon-cancel">取消</a>
-	</div>
+		<div style="text-align:center;padding:5px;">
+			<a href="javascript:void(0)" onclick="saveUser()" id="btn-save" icon="icon-save">保存</a>
+			<a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" icon="icon-cancel">取消</a>
+		</div>
 	</div>
 </body>
 </html>

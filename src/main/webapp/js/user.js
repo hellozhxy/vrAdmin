@@ -1,7 +1,7 @@
 $(function(){
 	grid = $('#user-table').datagrid({
 		url:'/user/listUsers',
-		title:'用户资料',
+		title:'用户信息',
 		width:600,
 		height:300,
 		singleSelect:true,
@@ -32,7 +32,7 @@ var form;
 function newUser(){
 	win.window('open');
 	form.form('clear');
-	form.url = '/user/save';
+	form.url = '/user/addUser';
 }
 function editUser(){
 	var row = grid.datagrid('getSelected');

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.vr.web.model.UserInfo;
 import com.vr.web.service.UserService;
 
@@ -24,10 +25,12 @@ public class UserController {
 
 
   @RequestMapping("listUsers")
-  public ModelAndView listUsers() {
-    ModelAndView view = new ModelAndView("user/listUser");
+//  public ModelAndView listUsers() {
+  public ModelAndView listUsers(){
     List<UserInfo> users = userService.listUsers();
-    view.addObject("users", users);
+    logger.info(JSON.toJSONString(users));
+    ModelAndView view = new ModelAndView("user/listUser");
+    view.addObject("rows", users);
     return view;
   }
 
