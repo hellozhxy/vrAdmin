@@ -2,7 +2,7 @@
 <!-- slf4j日志配置文件 -->
 <configuration debug="true" scan="true" scanPeriod="30 seconds">
 	<!-- 设置日志输出根目录 -->
-	<property name="log.dir" value="${catalina}/vrWeb/logs" />
+	<property name="log.dir" value="${catalina}/vrAdmin/logs" />
 	<property name="encoding" value="UTF-8" />
 	<property name="normal-pattern" value="%d{yyyy-MM-dd.HH:mm:ss} %-5level [%thread] %logger{10}  %msg%n" />
 	<property name="console-pattern" value="%d{yyyy-MM-dd HH:mm:ss}|%.-5level|%-40.40logger{0}|%msg%n" />
@@ -18,7 +18,7 @@
 			<charset>${encoding}</charset>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${log.dir}/vrWeb.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+			<fileNamePattern>${log.dir}/vrAdmin.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
 		</rollingPolicy>
 		<maxHistory>7</maxHistory>
 	</appender>

@@ -37,7 +37,7 @@ String path = request.getContextPath()+"/";
 
       <script>
         var r = new Resumable({
-            target:'/vrWeb/doupload',
+            target:'/vrAdmin/doupload',
             chunkSize:1*1024*1024,
             simultaneousUploads:4,
             testChunks: false,
