@@ -11,33 +11,34 @@
 	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
 	
 	<script type="text/javascript">
-	var dataGrid;
 	$(function() {
-		dataGrid = $('#dataGrid').datagrid({
-			url : '/user/getUsers',
-			fit : true,
-			striped : true,
-			rownumbers : true,
-			pagination : true,
-			singleSelect : true,
-			idField : 'id',
-			sortName : 'createdatetime',
-			sortOrder : 'asc',
-			pageSize : 50,
-			pageList : [10, 20, 30, 40, 50, 100],
-			columns : [ [ {
-				width : '80',
-				title : '登录名',
-				field : 'loginIp',
-				sortable : true
-			}, {
-				width : '80',
-				title : '姓名',
-				field : 'userName',
-				sortable : true
-			}]]
-		});
+		loadData();
 	});
+	
+	var title = [[
+			        {field:'userName',title:'用户名',align : 'center',width:100},
+			        {field:'loginIp',title:'登录IP', align : 'center',width:100}
+			    ]];
+	function loadData(){
+		$('#dataGrid').datagrid({
+			url : '/user/getUsers?t='+new Date().getTime(),
+		    loadMsg : '',
+		    //pagination : true,
+			pageList : [ 300 ],
+			pageSize : 300,
+		    autoRowHeight:false,
+		    height:450,
+		    width:1050,
+			//queryParams: param,
+		    columns:title,
+		    onLoadSuccess:function(data){
+		    	
+		    },
+		    onLoadError:function(){
+		    	//console.log("error");
+		    }
+		});
+	}
 	</script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
