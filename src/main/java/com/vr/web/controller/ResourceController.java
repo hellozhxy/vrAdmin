@@ -21,7 +21,7 @@ public class ResourceController {
 	@Autowired
 	private ResourceService resourceService;
 	
-	@RequestMapping(value="listResources", method ={RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value="/listResources", method ={RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView listResources(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView view = new ModelAndView("resource/listResource");
 	    List<Video> videos = resourceService.findAllVideos();

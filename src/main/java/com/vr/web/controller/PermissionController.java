@@ -15,7 +15,7 @@ import com.vr.web.model.PermissionInfo;
 import com.vr.web.service.PermissionService;
 
 @Controller
-@RequestMapping("permission")
+@RequestMapping("/permission")
 public class PermissionController {
 
   @Autowired

@@ -31,7 +31,7 @@ public class UserController {
     return view;
   }
 
-  @RequestMapping("getUsers")
+  @RequestMapping("/getUsers")
   @ResponseBody
   public Object getUsers() {
     List<UserInfo> users = userService.listUsers();
