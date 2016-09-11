@@ -6,7 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>权限设置</title>
-	<link href="css/style.css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="wrapper">
@@ -32,6 +32,5 @@
 			</div>
         </form>
     </div>
-<!--    	<script src="http://qunarzz.com/flight_fuwu/prd/scripts/release/ota/power_add.js" type="text/javascript" charset="utf-8"></script> -->
 </body>
 </html>
