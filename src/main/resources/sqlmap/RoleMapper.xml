@@ -8,7 +8,7 @@
   </resultMap>
 	  
 	
-	<select id="findAllUsers" resultMap="RoleMap">
+	<select id="findAllRoles" resultMap="RoleMap">
 		select * 
 		from tb_role 
 	</select>
