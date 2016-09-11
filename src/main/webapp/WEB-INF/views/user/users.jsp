@@ -9,38 +9,10 @@
 	<link type="text/css" rel="stylesheet" href="/js/themes/icon.css">
 	<script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
-	
-	<script type="text/javascript">
-	$(function() {
-		loadData();
-	});
-	
-	var title = [[
-			        {field:'userName',title:'用户名',align : 'center',width:100},
-			        {field:'loginIp',title:'登录IP', align : 'center',width:100}
-			    ]];
-	function loadData(){
-		$('#dataGrid').datagrid({
-			url : '/user/getUsers?t='+new Date().getTime(),
-		    loadMsg : '',
-		    //pagination : true,
-			pageList : [ 300 ],
-			pageSize : 300,
-		    autoRowHeight:false,
-		    height:450,
-		    width:1050,
-			//queryParams: param,
-		    columns:title,
-		    onLoadSuccess:function(data){
-		    	
-		    },
-		    onLoadError:function(){
-		    	//console.log("error");
-		    }
-		});
-	}
-	</script>
+	<script type="text/javascript" src="/js/user.js"></script>
 </head>
+
+
 <body class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
 		<form id="searchForm">
@@ -56,7 +28,7 @@
 		</form>
 	</div>
 	<div data-options="region:'center',border:true,title:'用户列表'" >
-		<table id="dataGrid" data-options="fit:true,border:false"></table>
+		<table id="user-table" data-options="fit:true,border:false"></table>
 	</div>
 </body>
 </html>

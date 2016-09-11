@@ -6,22 +6,22 @@ $(function(){
 		pagination:10,
 		pageSize:10,
 		pageList:[ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ],
-		fit:true,
+//		fit:true,
 		fitColumns:true,
 		nowrap : false,
 		border : false,
 //		width:auto,
 //		height:auto,
-//		singleSelect:true,
-//		striped:true,
+		singleSelect:true,
+		striped:true,
 		rownumbers:true,
 		columns:[[
 		          {field:'userName',title:'姓名',width:100,sortable:true},
-//		          {field:'mobile',title:'电话',width:100,sortable:true},
-//		          {field:'email',title:'邮箱',width:100,sortable:true},
-//		          {field:'status',title:'状态',width:100,sortable:true},
-//		          {field:'registerDate',title:'注册时间',width:100,sortable:true},
-//		          {field:'lastLoginDate',title:'登录时间',width:100,sortable:true},
+		          {field:'mobile',title:'电话',width:100,sortable:true},
+		          {field:'email',title:'邮箱',width:100,sortable:true},
+		          {field:'status',title:'状态',width:100,sortable:true},
+		          {field:'registerDate',title:'注册时间',width:100,sortable:true},
+		          {field:'lastLoginDate',title:'登录时间',width:100,sortable:true},
 		          {field:'loginIp',title:'登录IP',width:100,sortable:true}]],
 		toolbar:[{
 			text:'新增',
@@ -43,10 +43,6 @@ $(function(){
 	form = win.find('form');
 });
 
-function fixWidth(percent){
-//	return document.body.clientWidth * percent;
-	return $('#user-table').css("width") * percent;
-}
 
 var grid;
 var win;
