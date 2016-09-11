@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vr.web.dao.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.vr.web.model.Video">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="play_times" jdbcType="INTEGER" property="playTimes" />
+    <result column="permission" jdbcType="INTEGER" property="permission" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+    <result column="operator_user_id" jdbcType="BIGINT" property="operatorUserId" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, user_id, title, description, status, type, publish_time, keywords, path, play_times, 
+    permission, create_time, last_update_time, operator_user_id
+  </sql>
+  
+  <sql id="Base_Where">
+    <if test="userId != null">and user_id = #{userId}</if>
+    <if test="status != null">and status = #{status}</if>
+    <if test="type != null">and type = #{type}</if>
+    <if test="publishTime != null"><![CDATA[ and publish_time >= #{publishTime}]]></if>
+    <if test="permission != null">and permission = #{permission}</if>
+    <if test="keywords != null and keywords !=''">and keywords = #{keywords}</if>
+  </sql>
+  
+  <select id="findAllVideos" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from tb_video order by create_time desc
+  </select>
+  
+  <select id="findVideoByParams"  parameterType="java.util.Map"  resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from tb_video where 1=1 <include refid="Base_Where" /> order by create_time desc
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_video
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_video
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.vr.web.model.Video">
+    insert into tb_video (id, user_id, title, 
+      description, status, type, 
+      publish_time, keywords, path, 
+      play_times, permission, create_time, 
+      last_update_time, operator_user_id)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{keywords,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{playTimes,jdbcType=INTEGER}, #{permission,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{operatorUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vr.web.model.Video">
+    insert into tb_video
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+      <if test="keywords != null">
+        keywords,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="playTimes != null">
+        play_times,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="operatorUserId != null">
+        operator_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="keywords != null">
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="playTimes != null">
+        #{playTimes,jdbcType=INTEGER},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorUserId != null">
+        #{operatorUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vr.web.model.Video">
+    update tb_video
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="keywords != null">
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="playTimes != null">
+        play_times = #{playTimes,jdbcType=INTEGER},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorUserId != null">
+        operator_user_id = #{operatorUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vr.web.model.Video">
+    update tb_video
+    set user_id = #{userId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      play_times = #{playTimes,jdbcType=INTEGER},
+      permission = #{permission,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      operator_user_id = #{operatorUserId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
