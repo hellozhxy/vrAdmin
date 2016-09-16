@@ -13,22 +13,50 @@
 </head>
 
 
-<body class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'north',border:false" style="height: 30px; overflow: hidden;background-color: #fff">
+<body class="easyui-layout" data-options="border:false">
+	<div data-options="region:'north',border:false" style="height: 35px; overflow: hidden;background-color: #fff">
 		<form id="searchForm">
 			<table>
 				<tr>
 					<th>姓名:</th>
-					<td><input name="name" placeholder="请输入用户姓名"/></td>
-					<th>创建时间:</th>
-					<td><input name="createdatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至<input  name="createdatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />
-					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a></td>
+					<td><input id="name" placeholder="请输入用户姓名"/></td>
+					<td><a href="javascript:findUser();" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div data-options="region:'center',border:true,title:'用户列表'" >
-		<table id="user-table" data-options="fit:true,border:false"></table>
+	
+	<div data-options="region:'center',border:true" >
+		<table id="user-table" data-options="border:false"></table>
+	</div>
+	
+	<div id="user-window" title="用户窗口" style="width:400px;height:250px;">
+		<div style="padding:20px 20px 40px 80px;">
+			<form method="post">
+				<table>
+					<tr>
+						<td>名称：</td>
+						<td><input name="name"></input></td>
+					</tr>
+					<tr>
+						<td>电话：</td>
+						<td><input name="phone"></input></td>
+					</tr>
+					<tr>
+						<td>地址：</td>
+						<td><input name="addr"></input></td>
+					</tr>
+					<tr>
+						<td>职务：</td>
+						<td><input name="duty"></input></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div style="text-align:center;padding:5px;">
+			<a href="javascript:void(0)" onclick="saveUser()" id="btn-save" icon="icon-save">保存</a>
+			<a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" icon="icon-cancel">取消</a>
+		</div>
 	</div>
 </body>
 </html>

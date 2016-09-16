@@ -2,20 +2,18 @@ $(function(){
 	grid = $('#user-table').datagrid({
 		url:'/user/getUsers',
 		dataType:'json',
-//		title:'用户信息',
 		pagination:10,
 		pageSize:10,
 		pageList:[ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ],
 //		fit:true,
-		fitColumns:true,
+//		fitColumns:true,
 		nowrap : false,
 		border : false,
-//		width:auto,
-//		height:auto,
-		singleSelect:true,
+//		singleSelect:true,
 		striped:true,
 		rownumbers:true,
 		columns:[[
+		          {field:'id',checkbox:true},
 		          {field:'userName',title:'姓名',width:100,sortable:true},
 		          {field:'mobile',title:'电话',width:100,sortable:true},
 		          {field:'email',title:'邮箱',width:100,sortable:true},
@@ -24,23 +22,23 @@ $(function(){
 		          {field:'lastLoginDate',title:'登录时间',width:100,sortable:true},
 		          {field:'loginIp',title:'登录IP',width:100,sortable:true}]],
 		toolbar:[{
-			text:'新增',
-			iconCls:'icon-add',
-			handler:newUser
-		},'-',{
 			text:'修改',
 			iconCls:'icon-edit',
-			handler:editUser
+			handler: function(){
+				editUser();
+			}
 		},'-',{
 			text:'删除',
-			iconCls:'icon-remove'
+			iconCls:'icon-remove',
+			handler: function(){
+				delUser();
+			}
 		}]
 	});
 	$('#btn-save,#btn-cancel').linkbutton();
 	win = $('#user-window').window({
 		closed:true
 	});
-	form = win.find('form');
 });
 
 
@@ -48,36 +46,31 @@ var grid;
 var win;
 var form;
 
-function newUser(){
-	win.window('open');
-	form.form('clear');
-	form.url = '/user/addUser';
-}
 function editUser(){
-	var row = grid.datagrid('getSelected');
-	if (row){
+	var rows = grid.datagrid('getSelections');
+	if (rows.length == 1){
 		win.window('open');
 		form.form('load', '/user/getUser/'+row.id);
-		form.url = '/user/update/'+row.id;
-	} else {
-		$.messager.show({
-			title:'警告', 
-			msg:'请先选择用户资料。'
-		});
+		form.url = '/user/addUser/'+row.id;
+	} else if(rows.length == 0){
+		$.messager.alert('提示','请选择一条修改记录!','info');
+	} else if(rows.length >= 0){
+		$.messager.alert('提示','只能选择一条修改记录!','info');
 	}
 }
-function saveUser(){
-	form.form('submit', {
-		url:form.url,
-		success:function(data){
-			eval('data='+data);
-			if (data.success){
-				grid.datagrid('reload');
-				win.window('close');
-			} else {
-				$.messager.alert('错误',data.msg,'error');
-			}
-		}
+function delUser(){
+	var rows = grid.datagrid('getSelections');
+	if (rows.length >= 1){
+		win.window('open');
+		form.form('load', '/user/getUser/'+row.id);
+		form.url = '/user/deleteUser/'+row.id;
+	} else {
+		$.messager.alert('提示','请选择一条或多条修改记录!','info');
+	}
+}
+function findUser(){
+	$('#user-table').datagrid('load', {
+		name: $('#searchForm').val()
 	});
 }
 function closeWindow(){

@@ -47,4 +47,22 @@ public class UserController {
   public UserInfo getUserInfo(@RequestParam("userid") long userid) {
     return userService.findUserInfoById(userid);
   }
+  
+  @RequestMapping("addUser")
+  @ResponseBody
+  public void addUser(){
+    
+  }
+  
+  @RequestMapping("deleteUser")
+  @ResponseBody
+  public void deleteUser(){
+    
+  }
+  
+  @RequestMapping("modifyUser")
+  @ResponseBody
+  public void modifyUser(){
+    
+  }
 }
