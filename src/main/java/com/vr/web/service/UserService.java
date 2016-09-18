@@ -9,6 +9,8 @@ public interface UserService {
   public List<UserInfo> listUsers();
 
   public UserInfo findUserInfoById(long userid);
+
+  public List<UserInfo> findUserInfoByName(String name);
   
 
 }

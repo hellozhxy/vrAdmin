@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,13 @@ public class UserController {
 
   @RequestMapping("/getUsers")
   @ResponseBody
-  public Object getUsers() {
-    List<UserInfo> users = userService.listUsers();
+  public Object getUsers(@RequestParam(value="name", required=false) String name) {
+    List<UserInfo> users = null;
+    if(StringUtils.isBlank(name)){
+      users = userService.listUsers();
+    } else{
+      users = userService.findUserInfoByName(name);
+    }
     Map<String, Object> ret = new HashMap<String, Object>();
     ret.put("total", users.size());
     ret.put("rows", users);
@@ -42,12 +48,6 @@ public class UserController {
   }
 
 
-  @RequestMapping("findUser")
-  @ResponseBody
-  public UserInfo getUserInfo(@RequestParam("userid") long userid) {
-    return userService.findUserInfoById(userid);
-  }
-  
   @RequestMapping("addUser")
   @ResponseBody
   public void addUser(){
@@ -60,9 +60,9 @@ public class UserController {
     
   }
   
-  @RequestMapping("modifyUser")
+  @RequestMapping("editUser")
   @ResponseBody
-  public void modifyUser(){
+  public void editUser(@RequestParam("userid") long userid){
     
   }
 }

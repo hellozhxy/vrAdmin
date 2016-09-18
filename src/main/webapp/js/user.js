@@ -13,7 +13,7 @@ $(function(){
 		striped:true,
 		rownumbers:true,
 		columns:[[
-		          {field:'id',checkbox:true},
+		          {field:'userId',checkbox:true},
 		          {field:'userName',title:'姓名',width:100,sortable:true},
 		          {field:'mobile',title:'电话',width:100,sortable:true},
 		          {field:'email',title:'邮箱',width:100,sortable:true},
@@ -47,11 +47,11 @@ var win;
 var form;
 
 function editUser(){
-	var rows = grid.datagrid('getSelections');
+	var rows = grid.datagrid('getSelected');
 	if (rows.length == 1){
 		win.window('open');
 		form.form('load', '/user/getUser/'+row.id);
-		form.url = '/user/addUser/'+row.id;
+		form.url = '/user/editUser?userid='+row.userId;
 	} else if(rows.length == 0){
 		$.messager.alert('提示','请选择一条修改记录!','info');
 	} else if(rows.length >= 0){
@@ -70,7 +70,7 @@ function delUser(){
 }
 function findUser(){
 	$('#user-table').datagrid('load', {
-		name: $('#searchForm').val()
+		name: $('#name').val()
 	});
 }
 function closeWindow(){

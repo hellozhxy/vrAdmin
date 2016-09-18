@@ -12,4 +12,6 @@ public interface UserMapper {
 
   public UserInfo findUserInfoById(@Param("userid") long userid);
 
+  public List<UserInfo> findUserInfoByName(@Param("name") String name);
+
 }
