@@ -48,21 +48,26 @@ public class UserController {
   }
 
 
-  @RequestMapping("addUser")
-  @ResponseBody
-  public void addUser(){
-    
-  }
-  
   @RequestMapping("deleteUser")
   @ResponseBody
   public void deleteUser(){
     
   }
   
-  @RequestMapping("editUser")
+  @RequestMapping("saveUser")
   @ResponseBody
-  public void editUser(@RequestParam("userid") long userid){
-    
+  public boolean saveUser(UserInfo user){
+    return userService.modifyUserInfo(user);
+  }
+  
+  
+  @RequestMapping("findUser")
+  @ResponseBody
+  public String findUser(@RequestParam("userid") long userid){
+    UserInfo user = userService.findUserInfoById(userid);
+    Map<String, Object> ret = new HashMap<String, Object>();
+    ret.put("total", 1);
+    ret.put("rows", user);
+    return JSON.toJSONString(ret);
   }
 }

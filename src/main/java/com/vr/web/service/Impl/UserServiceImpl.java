@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService{
     return userMapper.findUserInfoByName(name);
   }
 
+  @Override
+  public boolean modifyUserInfo(UserInfo user) {
+    return userMapper.modifyUserInfo(user.getUserId(), user.getUserName(),user.getMobile(),user.getEmail());
+  }
+
 }

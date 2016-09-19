@@ -11,6 +11,8 @@ public interface UserService {
   public UserInfo findUserInfoById(long userid);
 
   public List<UserInfo> findUserInfoByName(String name);
+
+  public boolean modifyUserInfo(UserInfo user);
   
 
 }

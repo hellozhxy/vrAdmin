@@ -32,23 +32,26 @@
 	
 	<div id="user-window" title="用户窗口" style="width:400px;height:250px;">
 		<div style="padding:20px 20px 40px 80px;">
-			<form method="post">
+			<form id='form' method="post">
 				<table>
 					<tr>
-						<td>名称：</td>
-						<td><input name="name"></input></td>
+						<td><input name="userId" type="hidden"></td>
+					</tr>
+					<tr>
+						<td>姓名：</td>
+						<td><input name="userName"></input></td>
 					</tr>
 					<tr>
 						<td>电话：</td>
-						<td><input name="phone"></input></td>
+						<td><input name="mobile"></input></td>
 					</tr>
 					<tr>
-						<td>地址：</td>
-						<td><input name="addr"></input></td>
+						<td>邮件：</td>
+						<td><input name="email"></input></td>
 					</tr>
 					<tr>
-						<td>职务：</td>
-						<td><input name="duty"></input></td>
+						<td>状态：</td>
+						<td><input name="status"></input></td>
 					</tr>
 				</table>
 			</form>
