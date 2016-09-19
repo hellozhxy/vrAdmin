@@ -50,8 +50,8 @@ public class UserController {
 
   @RequestMapping("deleteUser")
   @ResponseBody
-  public void deleteUser(){
-    
+  public boolean deleteUser(@RequestParam("userid") List<Long> useridList){
+    return userService.deleteUser(useridList);
   }
   
   @RequestMapping("saveUser")

@@ -103,10 +103,15 @@ function saveUser() {
 }
 function delUser() {
 	var rows = grid.datagrid('getSelections');
+	
 	if (rows.length >= 1) {
-		win.window('open');
-		form.form('load', '/user/getUser/' + row.id);
-		form.url = '/user/deleteUser/' + row.id;
+		var ids = '';
+		$.each(rows,function(n,value){
+			ids += value.userId;
+			ids += ',';
+		});
+		form.form('load', '/user/deleteUser?userid=' + ids);
+		$('#user-table').datagrid('reload');
 	} else {
 		$.messager.alert('提示', '请选择一条或多条修改记录!', 'info');
 	}

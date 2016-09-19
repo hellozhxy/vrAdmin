@@ -35,7 +35,12 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public boolean modifyUserInfo(UserInfo user) {
-    return userMapper.modifyUserInfo(user.getUserId(), user.getUserName(),user.getMobile(),user.getEmail());
+    return userMapper.modifyUserInfo(user.getUserId(), user.getUserName(),user.getMobile(),user.getEmail()) > 0;
+  }
+
+  @Override
+  public boolean deleteUser(List<Long> useridList) {
+    return userMapper.deleteUser(useridList) > 0;
   }
 
 }

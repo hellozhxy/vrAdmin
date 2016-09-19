@@ -14,7 +14,9 @@ public interface UserMapper {
 
   public List<UserInfo> findUserInfoByName(@Param("name") String name);
 
-  public boolean modifyUserInfo(@Param("userId") long userId, @Param("userName") String userName, 
+  public int modifyUserInfo(@Param("userId") long userId, @Param("userName") String userName, 
       @Param("mobile") String mobile, @Param("email") String email);
+
+  public int deleteUser(@Param("userId") List<Long> userids);
 
 }

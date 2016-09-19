@@ -13,6 +13,8 @@ public interface UserService {
   public List<UserInfo> findUserInfoByName(String name);
 
   public boolean modifyUserInfo(UserInfo user);
+
+  public boolean deleteUser(List<Long> useridList);
   
 
 }
