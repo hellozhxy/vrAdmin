@@ -12,7 +12,7 @@
 									{"menuname":"用户管理","icon":"icon-users","url":"<%=path%>user"},
 									{"menuname":"角色管理","icon":"icon-role","url":"<%=path%>role"},
 									{"menuname":"权限设置","icon":"icon-set","url":"<%=path%>permission/listPermission"},
-									{"menuname":"视频管理","icon":"icon-set","url":"<%=path%>resource/listResource"},
+									{"menuname":"视频管理","icon":"icon-set","url":"<%=path%>resource"},
 									{"menuname":"系统日志","icon":"icon-log","url":"<%=path%>def"}
 								]
 						},{"menuid":"8","icon":"icon-sys","menuname":"员工管理",
