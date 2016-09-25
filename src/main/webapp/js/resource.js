@@ -1,6 +1,6 @@
 $(function() {
-	grid = $('#resource-table').datagrid({
-		url : '/user/getUsers',
+	grid = $('#resource-table').datagrid({	
+		url : '/resource/getVideos',
 		dataType : 'json',
 		pagination : 10,
 		pageSize : 10,
@@ -13,56 +13,73 @@ $(function() {
 		striped : true,
 		rownumbers : true,
 		columns : [ [ {
-			field : 'userId',
-			checkbox : true
+			field : 'videoId',
+			title : 'ID',
+			width : 50,
+			checkbox : false
 		}, {
 			field : 'userName',
-			title : '姓名',
-			width : 100,
-			sortable : true
+			title : '作者',
+			width : 150,
+			sortable : false
 		}, {
-			field : 'mobile',
-			title : '电话',
-			width : 100,
-			sortable : true
+			field : 'title',
+			title : '标题',
+			width : 200,
+			sortable : false
 		}, {
-			field : 'email',
-			title : '邮箱',
-			width : 100,
-			sortable : true
+			field : 'description',
+			title : '描述',
+			width : 300,
+			sortable : false
 		}, {
 			field : 'status',
 			title : '状态',
-			width : 100,
+			width : 50,
 			sortable : true
 		}, {
-			field : 'registerDate',
-			title : '注册时间',
+			field : 'categoryName',
+			title : '分类',
 			width : 100,
-			sortable : true
+			sortable : false
 		}, {
-			field : 'lastLoginDate',
-			title : '登录时间',
+			field : 'keywords',
+			title : '关键字',
 			width : 100,
-			sortable : true
+			sortable : false
 		}, {
-			field : 'loginIp',
-			title : '登录IP',
+			field : 'path',
+			title : '路径',
+			width : 300,
+			sortable : false
+		} , {
+			field : 'playTimes',
+			title : '播放次数',
 			width : 100,
 			sortable : true
-		} ] ],
+		} , {
+			field : 'createTime',
+			title : '上传时间',
+			width : 200,
+			sortable : true
+		} , {
+			field : 'publishTime',
+			title : '发布时间',
+			width : 200,
+			sortable : true
+		}] ],
 		toolbar : [ {
 			text : '修改',
 			iconCls : 'icon-edit',
-			handler : editUser
+			handler : editVideo
 		}, '-', {
-			text : '删除',
+			text : '审核',
 			iconCls : 'icon-remove',
-			handler : delUser
+			handler : auditVideo
 		} ]
 	});
 	$('#btn-save,#btn-cancel').linkbutton();
-	win = $('#user-window').window({
+	win = $('#video-window').window({
 		closed : true
 	});
 	form = win.find('form')
@@ -72,7 +89,7 @@ var grid;
 var win;
 var form;
 
-function editUser() {
+function editVideo() {
 	var rows = grid.datagrid('getSelections');
 	if (rows.length == 1) {
 		win.window('open');
@@ -101,7 +118,7 @@ function saveUser() {
 		}
 	});
 }
-function delUser() {
+function auditVideo() {
 	var rows = grid.datagrid('getSelections');
 	
 	if (rows.length >= 1) {
@@ -116,9 +133,11 @@ function delUser() {
 		$.messager.alert('提示', '请选择一条或多条修改记录!', 'info');
 	}
 }
-function findUser() {
+function findResource() {
 	$('#resource-table').datagrid('load', {
-		name : $('#name').val()
+		title : $('#video_title').val(),
+		categoryId : $('#video_category').val(),
+		status : $('#video_status').val()
 	});
 }
 function closeWindow() {

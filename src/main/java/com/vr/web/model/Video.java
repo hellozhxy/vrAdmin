@@ -3,14 +3,9 @@ package com.vr.web.model;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 
- * @author 俊
- *
- */
 public class Video implements Serializable{
 	
-	private static final long serialVersionUID = 802660855062149401L;
+	private static final long serialVersionUID = 5908336042562207737L;
 
 	private Long id;
 
@@ -22,13 +17,15 @@ public class Video implements Serializable{
 
     private Integer status;
 
-    private Byte type;
+    private Integer categoryId;
 
     private Date publishTime;
 
     private String keywords;
 
     private String path;
+
+    private String url;
 
     private Integer playTimes;
 
@@ -80,12 +77,12 @@ public class Video implements Serializable{
         this.status = status;
     }
 
-    public Byte getType() {
-        return type;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setType(Byte type) {
-        this.type = type;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Date getPublishTime() {
@@ -110,6 +107,14 @@ public class Video implements Serializable{
 
     public void setPath(String path) {
         this.path = path == null ? null : path.trim();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 
     public Integer getPlayTimes() {

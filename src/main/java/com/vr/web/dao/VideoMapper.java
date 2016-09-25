@@ -20,5 +20,4 @@ public interface VideoMapper {
     
     List<Video> findVideoByParams(Map<String, Object> params);
     
-    List<Video> findAllVideos();
 }

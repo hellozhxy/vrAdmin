@@ -7,10 +7,11 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="keywords" jdbcType="VARCHAR" property="keywords" />
     <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="play_times" jdbcType="INTEGER" property="playTimes" />
     <result column="permission" jdbcType="INTEGER" property="permission" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -19,25 +20,21 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, user_id, title, description, status, type, publish_time, keywords, path, play_times, 
-    permission, create_time, last_update_time, operator_user_id
+    id, user_id, title, description, status, category_id, publish_time, keywords, path, 
+    url, play_times, permission, create_time, last_update_time, operator_user_id
   </sql>
   
   <sql id="Base_Where">
     <if test="userId != null">and user_id = #{userId}</if>
     <if test="status != null">and status = #{status}</if>
-    <if test="type != null">and type = #{type}</if>
-    <if test="publishTime != null"><![CDATA[ and publish_time >= #{publishTime}]]></if>
+    <if test="categoryId != null">and category_id = #{categoryId}</if>
     <if test="permission != null">and permission = #{permission}</if>
-    <if test="keywords != null and keywords !=''">and keywords = #{keywords}</if>
+    <if test="keywords != null and keywords !=''">and keywords like concat(cancat('%',#{keywords}),'%')</if>
+    <if test="title != null and title !=''">and title like concat(cancat('%',#{title}),'%')</if>
   </sql>
   
-  <select id="findAllVideos" resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List" /> from tb_video order by create_time desc
-  </select>
-  
-  <select id="findVideoByParams"  parameterType="java.util.Map"  resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List" /> from tb_video where 1=1 <include refid="Base_Where" /> order by create_time desc
+  <select id="findVideoByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from tb_video where 1=1 <include refid="Base_Where" /> order by create_time desc limit #{offSet}, #{pageSize}
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -46,21 +43,24 @@
     from tb_video
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tb_video
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.vr.web.model.Video">
     insert into tb_video (id, user_id, title, 
-      description, status, type, 
+      description, status, category_id, 
       publish_time, keywords, path, 
-      play_times, permission, create_time, 
-      last_update_time, operator_user_id)
+      url, play_times, permission, 
+      create_time, last_update_time, operator_user_id
+      )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, 
       #{publishTime,jdbcType=TIMESTAMP}, #{keywords,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
-      #{playTimes,jdbcType=INTEGER}, #{permission,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{lastUpdateTime,jdbcType=TIMESTAMP}, #{operatorUserId,jdbcType=BIGINT})
+      #{url,jdbcType=VARCHAR}, #{playTimes,jdbcType=INTEGER}, #{permission,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{operatorUserId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.vr.web.model.Video">
     insert into tb_video
@@ -80,8 +80,8 @@
       <if test="status != null">
         status,
       </if>
-      <if test="type != null">
-        type,
+      <if test="categoryId != null">
+        category_id,
       </if>
       <if test="publishTime != null">
         publish_time,
@@ -91,6 +91,9 @@
       </if>
       <if test="path != null">
         path,
+      </if>
+      <if test="url != null">
+        url,
       </if>
       <if test="playTimes != null">
         play_times,
@@ -124,8 +127,8 @@
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
       </if>
       <if test="publishTime != null">
         #{publishTime,jdbcType=TIMESTAMP},
@@ -135,6 +138,9 @@
       </if>
       <if test="path != null">
         #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
       <if test="playTimes != null">
         #{playTimes,jdbcType=INTEGER},
@@ -168,8 +174,8 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=INTEGER},
       </if>
       <if test="publishTime != null">
         publish_time = #{publishTime,jdbcType=TIMESTAMP},
@@ -179,6 +185,9 @@
       </if>
       <if test="path != null">
         path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
       </if>
       <if test="playTimes != null">
         play_times = #{playTimes,jdbcType=INTEGER},
@@ -204,10 +213,11 @@
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      type = #{type,jdbcType=TINYINT},
+      category_id = #{categoryId,jdbcType=INTEGER},
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
       keywords = #{keywords,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
       play_times = #{playTimes,jdbcType=INTEGER},
       permission = #{permission,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -1,10 +1,9 @@
 package com.vr.web.service.Impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vr.web.dao.VideoMapper;
@@ -14,18 +13,12 @@ import com.vr.web.service.ResourceService;
 @Service("resourceService")
 public class ResourceServiceImpl implements ResourceService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
-	
+	@Autowired
 	private VideoMapper videoMapper;
 
 	@Override
-	public List<Video> findAllVideos() {
-		try {
-			return videoMapper.findAllVideos();
-		} catch (Exception e) {
-			logger.error("ResourceServiceImpl_findAllVideos_invoke_error:", e);
-		}
-		return new ArrayList<Video>();
+	public List<Video> findVideos(Map<String, Object> params) {
+		return videoMapper.findVideoByParams(params);
 	}
 
 }
