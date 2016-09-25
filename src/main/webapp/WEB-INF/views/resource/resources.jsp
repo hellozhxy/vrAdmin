@@ -24,8 +24,9 @@
 					<th>分类:</th>
 					<td>
 					<select id="video_category" name="category">
+						<option value="" selected>请选择</option>
 						<c:forEach var="item" items="${videoCategorys}">
-							<option value="${item.id}" selected>${item.categoryName}</option>
+							<option value="${item.id}">${item.categoryName}</option>
 						</c:forEach>
 					</select>
 					</td>
@@ -33,6 +34,7 @@
 					<th>状态:</th>
 					<td>
 					<select id="video_status" name="status">
+					  <option value="" selected>请选择</option>
 					  <option value ="1">审核通过</option>
 					  <option value="0">审核不通过</option>
 					</select>
@@ -54,7 +56,7 @@
 				<table>
 					<tr>
 						<td>ID：</td>
-						<td><input name="videoId"></input></td>
+						<td><input name="id"></input></td>
 					</tr>
 					<tr>
 						<td>作者：</td>

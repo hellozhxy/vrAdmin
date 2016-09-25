@@ -2,22 +2,19 @@ $(function() {
 	grid = $('#resource-table').datagrid({	
 		url : '/resource/getVideos',
 		dataType : 'json',
-		pagination : 10,
+		pagination:true,
 		pageSize : 10,
 		pageList : [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ],
-		// fit:true,
-		// fitColumns:true,
+		fit:true,
+		fitColumns:true,
 		nowrap : false,
 		border : false,
-		// singleSelect:true,
+		singleSelect:true,
 		striped : true,
 		rownumbers : true,
-		columns : [ [ {
-			field : 'videoId',
-			title : 'ID',
-			width : 50,
-			checkbox : false
-		}, {
+		columns : [ [ 
+		 {field:'id',checkbox:true},
+		 {
 			field : 'userName',
 			title : '作者',
 			width : 150,
@@ -69,6 +66,10 @@ $(function() {
 			sortable : true
 		}] ],
 		toolbar : [ {
+			text : '上传',
+			iconCls : 'icon-add',
+			handler : uploadVideo
+		}, '-' ,{
 			text : '修改',
 			iconCls : 'icon-edit',
 			handler : editVideo
@@ -78,6 +79,14 @@ $(function() {
 			handler : auditVideo
 		} ]
 	});
+	var p = $('#resource-table').datagrid('getPager'); 
+    $(p).pagination({ 
+        pageSize: 10,//每页显示的记录条数，默认为10 
+        pageList: [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ],//可以设置每页记录条数的列表 
+        beforePageText: '第',//页数文本框前显示的汉字 
+        afterPageText: '页    共 {pages} 页', 
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
+    }); 
 	$('#btn-save,#btn-cancel').linkbutton();
 	win = $('#video-window').window({
 		closed : true
@@ -88,6 +97,10 @@ $(function() {
 var grid;
 var win;
 var form;
+
+function uploadVideo(){
+	
+}
 
 function editVideo() {
 	var rows = grid.datagrid('getSelections');
