@@ -28,7 +28,8 @@ $(function() {
 			field : 'description',
 			title : '描述',
 			width : 300,
-			sortable : false
+			sortable : false,
+			formatter : subStringFormatter
 		}, {
 			field : 'status',
 			title : '状态',
@@ -58,12 +59,14 @@ $(function() {
 			field : 'createTime',
 			title : '上传时间',
 			width : 200,
-			sortable : true
+			sortable : true,
+			formatter : dateFormatter
 		} , {
 			field : 'publishTime',
 			title : '发布时间',
 			width : 200,
-			sortable : true
+			sortable : true,
+			formatter : dateFormatter
 		}] ],
 		toolbar : [ {
 			text : '上传',
@@ -156,3 +159,37 @@ function findResource() {
 function closeWindow() {
 	win.window('close');
 }
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+//EasyUI用DataGrid用日期格式化
+function dateFormatter (value) {
+    if (value == null || value == '' || value == undefined) {
+		return '';
+	}
+	var dt = new Date(value);
+    return dt.Format("yyyy-MM-dd hh:mm:ss");
+}
+
+function subStringFormatter (value) {
+	if (value == null || value == '' || value == undefined) {
+		return '';
+	}
+    if (value.length > 15) value = value.toString().substring(0, 10) + "...";
+    return value;
+}
+
