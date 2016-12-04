@@ -9,7 +9,7 @@ public class Video implements Serializable{
 
 	private Long id;
 
-    private Integer userId;
+    private Long userId;
 
     private String title;
 
@@ -17,7 +17,7 @@ public class Video implements Serializable{
 
     private Integer status;
 
-    private Integer categoryId;
+    private Long categoryId;
 
     private Date publishTime;
 
@@ -45,11 +45,11 @@ public class Video implements Serializable{
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -77,11 +77,11 @@ public class Video implements Serializable{
         this.status = status;
     }
 
-    public Integer getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

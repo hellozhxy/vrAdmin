@@ -15,7 +15,7 @@ $(function() {
 		columns : [ [ 
 		 {field:'id',checkbox:true},
 		 {
-			field : 'userName',
+			field : 'userNickName',
 			title : '作者',
 			width : 150,
 			sortable : false

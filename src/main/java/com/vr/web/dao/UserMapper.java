@@ -1,5 +1,6 @@
 package com.vr.web.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -18,5 +19,7 @@ public interface UserMapper {
       @Param("mobile") String mobile, @Param("email") String email);
 
   public int deleteUser(@Param("userId") List<Long> userids);
+  
+  public List<UserInfo> findUsersByUserIds(@Param("userIds") Collection<Long> userIds);
 
 }

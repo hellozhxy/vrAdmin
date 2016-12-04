@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vr.utils.ToolsUtil;
-import com.vr.web.model.Video;
 import com.vr.web.model.VideoCategory;
 import com.vr.web.service.ResourceCategoryService;
 import com.vr.web.service.ResourceService;
 import com.vr.web.view.JaxbJsonView;
+import com.vr.web.vo.VideoVo;
 
 /**
  * Description:视频后台管理 
@@ -82,7 +82,7 @@ public class ResourceController {
 			params.put("title", title);
 			params.put("categoryId", categoryId);
 			params.put("status", status);
-			List<Video> videos = resourceService.findVideos(params);
+			List<VideoVo> videos = resourceService.findVideos(params);
 			ret.put("total", resourceService.findVideoCount(ToolsUtil.builderMapParams("title", title, "categoryId", categoryId, "status", status)));
 		    ret.put("rows", videos);
 		} catch (Exception e) {

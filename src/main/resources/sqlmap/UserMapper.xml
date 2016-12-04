@@ -4,8 +4,9 @@
   <resultMap id="UserMap" type="com.vr.web.model.UserInfo">
     <id column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
-<!--     <result column="password" jdbcType="VARCHAR" property="password" /> -->
-<!--     <result column="password_salt" jdbcType="VARCHAR" property="passwordSalt" /> -->
+	<result column="password" jdbcType="VARCHAR" property="password" />
+	<result column="password_salt" jdbcType="VARCHAR" property="passwordSalt" />
+	<result column="user_nickname" jdbcType="VARCHAR" property="userNickName" />
     <result column="user_img_url" jdbcType="VARCHAR" property="userImgUrl" />
     <result column="user_sex" jdbcType="INTEGER" property="userSex" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
@@ -49,4 +50,11 @@
 			#{userid}
 		</foreach>
 	</delete>
+	
+	<select id="findUsersByUserIds" resultMap="UserMap">
+		select * from tb_user where user_id IN 
+		<foreach collection="userIds" item="userid" open="(" separator="," close=")">
+			#{userid}
+		</foreach>
+	</select>
 </mapper>

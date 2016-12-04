@@ -60,7 +60,7 @@
 					</tr>
 					<tr>
 						<td>作者：</td>
-						<td><input name="userName"></input></td>
+						<td><input name="userNickName"></input></td>
 					</tr>
 					<tr>
 						<td>标题：</td>
