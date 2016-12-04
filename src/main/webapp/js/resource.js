@@ -13,11 +13,14 @@ $(function() {
 		striped : true,
 		rownumbers : true,
 		columns : [ [ 
-		 {field:'id',checkbox:true},
+		 {
+			 field : 'id',
+			 title : 'ID'
+		 },
 		 {
 			field : 'userNickName',
 			title : '作者',
-			width : 150,
+			width : 100,
 			sortable : false
 		}, {
 			field : 'title',
@@ -27,14 +30,15 @@ $(function() {
 		}, {
 			field : 'description',
 			title : '描述',
-			width : 300,
+			width : 350,
 			sortable : false,
 			formatter : subStringFormatter
 		}, {
 			field : 'status',
 			title : '状态',
 			width : 50,
-			sortable : true
+			sortable : true,
+			formatter : statusFormatter
 		}, {
 			field : 'categoryName',
 			title : '分类',
@@ -176,7 +180,6 @@ Date.prototype.Format = function (fmt) { //author: meizz
     return fmt;
 }
 
-//EasyUI用DataGrid用日期格式化
 function dateFormatter (value) {
     if (value == null || value == '' || value == undefined) {
 		return '';
@@ -189,7 +192,16 @@ function subStringFormatter (value) {
 	if (value == null || value == '' || value == undefined) {
 		return '';
 	}
-    if (value.length > 15) value = value.toString().substring(0, 10) + "...";
+    if (value.length > 30) value = value.toString().substring(0, 10) + "...";
     return value;
+}
+
+function statusFormatter(value){
+	if(value == "0"){
+		return "无效";
+	}else if(value == "1"){
+		return "正常";
+	}
+	return "未知";
 }
 
