@@ -1,4 +1,4 @@
-package com.vr.web.servlet;
+package com.vr.web.upload;
 
 import java.util.HashMap;
 

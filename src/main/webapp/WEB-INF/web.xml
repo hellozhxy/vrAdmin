@@ -37,15 +37,6 @@
 	</filter-mapping>
 	
 	<servlet>
-        <servlet-name>UploadServlet</servlet-name>
-        <servlet-class>com.vr.web.servlet.UploadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UploadServlet</servlet-name>
-        <url-pattern>/doupload</url-pattern>
-    </servlet-mapping>
-	
-	<servlet>
 		<servlet-name>AppServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>

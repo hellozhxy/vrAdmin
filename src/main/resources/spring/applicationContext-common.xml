@@ -25,7 +25,7 @@
 	<mvc:default-servlet-handler/>
 	
 	<!-- 使用annotation 自动注册bean -->
-	<context:component-scan base-package="com.vr.web.**" />
+	<context:component-scan base-package="com.vr.**" />
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"></property>

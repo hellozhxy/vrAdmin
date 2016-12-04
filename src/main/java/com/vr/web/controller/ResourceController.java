@@ -1,12 +1,20 @@
 package com.vr.web.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +25,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.vr.config.AdminConfig;
 import com.vr.utils.ToolsUtil;
+import com.vr.utils.UploadUtils;
 import com.vr.web.model.VideoCategory;
 import com.vr.web.service.ResourceCategoryService;
 import com.vr.web.service.ResourceService;
+import com.vr.web.upload.ResumableInfo;
+import com.vr.web.upload.ResumableInfoStorage;
 import com.vr.web.view.JaxbJsonView;
 import com.vr.web.vo.VideoVo;
 
@@ -40,6 +52,9 @@ public class ResourceController {
 	
 	@Autowired
 	private ResourceCategoryService resourceCategoryService;
+	
+	@Autowired
+	private AdminConfig adminConfig;
 	
 	/**
 	 * Description: 视频管理
@@ -90,6 +105,92 @@ public class ResourceController {
 					title, categoryId, status, page, rows), e);
 		}
 		return new ModelAndView(new JaxbJsonView(ret));
+	}
+	
+	/**
+	 * Description: 文件资源上传
+	 * @Version1.0 2016年12月4日 下午8:36:35 by 代鹏（daipeng.456@gmail.com）创建
+	 * @param request
+	 * @param response
+	 * @throws IllegalAccessException 
+	 * @throws ServletException 
+	 * @throws IOException 
+	 */
+	@ResponseBody
+	@RequestMapping(value="/upload", method ={RequestMethod.POST, RequestMethod.GET})
+	public void upload(HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, ServletException, IOException{
+		String method = request.getMethod();
+		if(HttpGet.METHOD_NAME.equals(method)){
+			int resumableChunkNumber = getResumableChunkNumber(request);
+
+			ResumableInfo info = getResumableInfo(request);
+
+			if (info.uploadedChunks.contains(new ResumableInfo.ResumableChunkNumber(resumableChunkNumber))) {
+				response.getWriter().print("Uploaded."); // This Chunk has been Uploaded.
+			} else {
+				response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
+			}
+		}else if(HttpPost.METHOD_NAME.equals(method)){
+			int resumableChunkNumber = getResumableChunkNumber(request);
+
+			ResumableInfo info = getResumableInfo(request);
+
+			RandomAccessFile raf = new RandomAccessFile(info.resumableFilePath, "rw");
+
+			// Seek to position
+			raf.seek((resumableChunkNumber - 1) * (long) info.resumableChunkSize);
+
+			// Save to file
+			InputStream is = request.getInputStream();
+			long readed = 0;
+			long content_length = request.getContentLength();
+			byte[] bytes = new byte[1024 * 100];
+			while (readed < content_length) {
+				int r = is.read(bytes);
+				if (r < 0) {
+					break;
+				}
+				raf.write(bytes, 0, r);
+				readed += r;
+			}
+			raf.close();
+
+			// Mark as uploaded.
+			info.uploadedChunks.add(new ResumableInfo.ResumableChunkNumber(resumableChunkNumber));
+			if (info.checkIfUploadFinished()) { // Check if all chunks uploaded, and change filename
+				ResumableInfoStorage.getInstance().remove(info);
+				response.getWriter().print("All finished.");
+			} else {
+				response.getWriter().print("Upload");
+			}
+		}
+	}
+	
+	private int getResumableChunkNumber(HttpServletRequest request) {
+		return UploadUtils.toInt(request.getParameter("resumableChunkNumber"), -1);
+	}
+
+	private ResumableInfo getResumableInfo(HttpServletRequest request)throws ServletException, UnsupportedEncodingException {
+		String base_dir = adminConfig.getUploadDir();
+		int resumableChunkSize = UploadUtils.toInt(request.getParameter("resumableChunkSize"), -1);
+		long resumableTotalSize = UploadUtils.toLong(request.getParameter("resumableTotalSize"), -1);
+		String resumableIdentifier = request.getParameter("resumableIdentifier");
+		String resumableFilename = request.getParameter("resumableFilename");
+		// String(request.getParameter("resumableFilename").getBytes("ISO8859-1"),"UTF-8");
+		String resumableRelativePath = request.getParameter("resumableRelativePath");
+		// Here we add a ".temp" to every upload file to indicate NON-FINISHED
+		new File(base_dir).mkdir();
+		String resumableFilePath = new File(base_dir, resumableFilename).getAbsolutePath() + ".temp";
+
+		ResumableInfoStorage storage = ResumableInfoStorage.getInstance();
+
+		ResumableInfo info = storage.get(resumableChunkSize, resumableTotalSize, resumableIdentifier, resumableFilename,
+				resumableRelativePath, resumableFilePath);
+		if (!info.vaild()) {
+			storage.remove(info);
+			throw new ServletException("Invalid request params.");
+		}
+		return info;
 	}
 	
 }
