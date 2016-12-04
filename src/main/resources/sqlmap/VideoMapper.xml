@@ -29,12 +29,16 @@
     <if test="status != null">and status = #{status}</if>
     <if test="categoryId != null">and category_id = #{categoryId}</if>
     <if test="permission != null">and permission = #{permission}</if>
-    <if test="keywords != null and keywords !=''">and keywords like concat(cancat('%',#{keywords}),'%')</if>
-    <if test="title != null and title !=''">and title like concat(cancat('%',#{title}),'%')</if>
+    <if test="keywords != null and keywords !=''">and keywords like concat('%',#{keywords},'%')</if>
+    <if test="title != null and title !=''">and title like concat('%',#{title},'%')</if>
   </sql>
   
   <select id="findVideoByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from tb_video where 1=1 <include refid="Base_Where" /> order by create_time desc limit #{offSet}, #{pageSize}
+  </select>
+  
+  <select id="findVideoCount" parameterType="java.util.Map" resultType="java.lang.Long">
+  	select count(id) from tb_video where 1=1 <include refid="Base_Where" />
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">

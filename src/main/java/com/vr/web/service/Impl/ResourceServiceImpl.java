@@ -21,4 +21,9 @@ public class ResourceServiceImpl implements ResourceService {
 		return videoMapper.findVideoByParams(params);
 	}
 
+	@Override
+	public Long findVideoCount(Map<String, Object> params) {
+		return videoMapper.findVideoCount(params);
+	}
+
 }

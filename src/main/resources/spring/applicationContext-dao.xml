@@ -9,24 +9,24 @@
           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
     default-lazy-init="false">
 		
-	<!-- c3p0 dataSource -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="driverClass" value="${jdbc.driver}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<property name="maxPoolSize" value="50" />
-		<property name="minPoolSize" value="1" />
-		<property name="initialPoolSize" value="10" />
-		<property name="maxIdleTime" value="20" />
-		<property name="acquireIncrement" value="3" />
-		<property name="maxStatements" value="0" />
-		<property name="idleConnectionTestPeriod" value="10" />
-		<property name="acquireRetryAttempts" value="10" />
-		<property name="acquireRetryDelay" value="1000" />
-		<property name="breakAfterAcquireFailure" value="false" />
-		<property name="testConnectionOnCheckout" value="true" />
-		<property name="testConnectionOnCheckin" value="true" />
+		<property name="filters" value="stat" />
+		<property name="maxActive" value="20" />
+		<property name="initialSize" value="1" />
+		<property name="maxWait" value="60000" />
+		<property name="minIdle" value="1" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 1 from dual" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="50" />
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

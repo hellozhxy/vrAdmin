@@ -19,5 +19,7 @@ public interface VideoMapper {
     int updateByPrimaryKey(Video record);
     
     List<Video> findVideoByParams(Map<String, Object> params);
+
+	Long findVideoCount(Map<String, Object> params);
     
 }
