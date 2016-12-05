@@ -71,21 +71,9 @@ $(function() {
 			width : 200,
 			sortable : true,
 			formatter : dateFormatter
-		}] ],
-		toolbar : [ {
-			text : '上传',
-			iconCls : 'icon-add',
-			handler : uploadVideo
-		}, '-' ,{
-			text : '修改',
-			iconCls : 'icon-edit',
-			handler : editVideo
-		}, '-', {
-			text : '审核',
-			iconCls : 'icon-remove',
-			handler : auditVideo
-		} ]
+		}] ]
 	});
+	
 	var p = $('#resource-table').datagrid('getPager'); 
     $(p).pagination({ 
         pageSize: 10,//每页显示的记录条数，默认为10 
@@ -94,74 +82,60 @@ $(function() {
         afterPageText: '页    共 {pages} 页', 
         displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
     }); 
-	$('#btn-save,#btn-cancel').linkbutton();
-	win = $('#video-window').window({
-		closed : true
-	});
-	form = win.find('form')
 });
 
 var grid;
-var win;
-var form;
 
-function uploadVideo(){
+function showAddVideo(){
 	
 }
 
-function editVideo() {
+function showEditVideo(){
 	var rows = grid.datagrid('getSelections');
 	if (rows.length == 1) {
-		win.window('open');
-		form.form('load', rows[0]);
-		url = '/user/findUser?userid=' + rows[0].userId;
+		$('#edit-video-window').dialog('open').dialog('setTitle','编辑视频');  
+	    $('#editForm').form('load',rows[0]);
+	    var status = rows[0].status;
+	    if(status == 0){
+	    	$('#editForm input[name="status"]').attr("value","无效");
+	    }else if(status == 1){
+	    	$('#editForm input[name="status"]').attr("value","有效");
+	    }
+		var url = '/resource/updateVideo?videoId=' + rows[0].id;
 	} else if (rows.length == 0) {
 		$.messager.alert('提示', '请选择一条修改记录!', 'info');
-	} else if (rows.length >= 0) {
+	} else if (rows.length > 1) {
 		$.messager.alert('提示', '只能选择一条修改记录!', 'info');
 	}
 }
-function saveUser() {
-	$('form').form('submit', {
-		url : '/user/saveUser',
-		onsubmit : function() {
-			return $(this).form('validate');
-		},
-		success : function(result) {
-			if (result == true) {
-				$.messager.alert('提示信息', '操作成功');
-				$("#resource-table").dialog("close");
-				$("#resource-table").datagrid("load");
-			} else {
-				$.messager.alert("提示信息", "操作失败");
-			}
-		}
-	});
-}
-function auditVideo() {
-	var rows = grid.datagrid('getSelections');
-	
-	if (rows.length >= 1) {
-		var ids = '';
-		$.each(rows,function(n,value){
-			ids += value.userId;
-			ids += ',';
-		});
-		form.form('load', '/user/deleteUser?userid=' + ids);
-		$('#resource-table').datagrid('reload');
-	} else {
-		$.messager.alert('提示', '请选择一条或多条修改记录!', 'info');
-	}
-}
+
+function editVideo(){  
+    $('#fm').form('submit',{  
+        url: url,  
+        onSubmit: function(){  
+            return $(this).form('validate');  
+        },  
+        success: function(result){  
+            var result = eval('('+result+')');  
+            if (result.errorMsg){  
+                $.messager.show({  
+                    title: 'Error',  
+                    msg: result.errorMsg  
+                });  
+            } else {  
+                $('#dlg').dialog('close'); // close the dialog  
+                $('#dg').datagrid('reload'); // reload the user data  
+            }  
+        }  
+    });  
+}  
+
 function findResource() {
 	$('#resource-table').datagrid('load', {
 		title : $('#video_title').val(),
 		categoryId : $('#video_category').val(),
 		status : $('#video_status').val()
 	});
-}
-function closeWindow() {
-	win.window('close');
 }
 
 Date.prototype.Format = function (fmt) { //author: meizz 

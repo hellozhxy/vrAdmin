@@ -107,6 +107,15 @@ public class ResourceController {
 		return new ModelAndView(new JaxbJsonView(ret));
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/updateVideo", method ={RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView getVideos(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="videoId", required=true)Long videoId){
+		
+		return new ModelAndView(new JaxbJsonView(null));
+	}
+	
+	
+	
 	/**
 	 * Description: 文件资源上传
 	 * @Version1.0 2016年12月4日 下午8:36:35 by 代鹏（daipeng.456@gmail.com）创建

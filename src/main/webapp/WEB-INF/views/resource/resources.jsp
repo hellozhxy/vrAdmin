@@ -47,20 +47,26 @@
 	</div>
 	
 	<div data-options="region:'center',border:true" >
-		<table id="resource-table" data-options="border:false"></table>
+		<table id="resource-table" class="easyui-datagrid" toolbar="#toolbar" data-options="border:false"></table>
 	</div>
 	
-	<div id="video-window" title="视频窗口" style="width:400px;height:250px;">
+	<div id="toolbar">  
+	    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showAddVideo()">新增</a>  
+	    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="showEditVideo()">编辑</a>  
+	    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeVideo()">删除</a>  
+	</div> 
+	
+	<div id="edit-video-window" class="easyui-dialog" closed="true" buttons="#edit-buttons" title="编辑窗口" style="width:500px;height:450px;">
 		<div style="padding:20px 20px 40px 80px;">
-			<form id='form' method="post">
+			<form id='editForm' method="post">
 				<table>
-					<tr>
+					<tr style="visibility:hidden;">
 						<td>ID：</td>
 						<td><input name="id"></input></td>
 					</tr>
 					<tr>
 						<td>作者：</td>
-						<td><input name="userNickName"></input></td>
+						<td><input name="userNickName" disabled="true"　readOnly="true"></input></td>
 					</tr>
 					<tr>
 						<td>标题：</td>
@@ -68,7 +74,9 @@
 					</tr>
 					<tr>
 						<td>描述：</td>
-						<td><input name="description"></input></td>
+						<td>
+							<textarea rows="15" cols="40" name="description"></textarea>
+						</td>
 					</tr>
 					<tr>
 						<td>状态：</td>
@@ -101,10 +109,12 @@
 				</table>
 			</form>
 		</div>
-		<div style="text-align:center;padding:5px;">
-			<a href="javascript:void(0)" onclick="saveVideo()" id="btn-save" icon="icon-save">保存</a>
-			<a href="javascript:void(0)" onclick="closeWindow()" id="btn-cancel" icon="icon-cancel">取消</a>
+		<div id="edit-buttons" style="text-align:center;padding:5px;">
+			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="editVideo()" icon="icon-save">确认</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#edit-video-window').dialog('close')" icon="icon-cancel">取消</a>
 		</div>
 	</div>
+	
+	
 </body>
 </html>
