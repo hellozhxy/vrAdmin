@@ -84,7 +84,11 @@
 					</tr>
 					<tr>
 						<td>分类：</td>
-						<td><input name="categoryName"></input></td>
+						<td>
+							<select name="categoryName">
+								<option value=""></option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td>关键字：</td>

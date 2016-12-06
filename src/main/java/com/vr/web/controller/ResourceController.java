@@ -69,6 +69,13 @@ public class ResourceController {
 		return view;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/videoCategorys", method ={RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView categorys() {
+		List<VideoCategory> videoCategorys = resourceCategoryService.findValidVideoCategorys();
+		return new ModelAndView(new JaxbJsonView(videoCategorys));
+	}
+	
 	/**
 	 * Description: 视频管理列表
 	 * @Version1.0 2016年12月4日 上午10:04:19 by 代鹏（daipeng.456@gmail.com）创建

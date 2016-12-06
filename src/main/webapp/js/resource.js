@@ -95,12 +95,33 @@ function showEditVideo(){
 	if (rows.length == 1) {
 		$('#edit-video-window').dialog('open').dialog('setTitle','编辑视频');  
 	    $('#editForm').form('load',rows[0]);
+	    //格式化状态
 	    var status = rows[0].status;
 	    if(status == 0){
 	    	$('#editForm input[name="status"]').attr("value","无效");
 	    }else if(status == 1){
 	    	$('#editForm input[name="status"]').attr("value","有效");
 	    }
+	    //格式化时间格式
+	    $('#editForm input[name="createTime"]').attr("value", dateFormatter(rows[0].createTime));
+	    $('#editForm input[name="publishTime"]').attr("value", dateFormatter(rows[0].publishTime));
+	    //分类
+	    var categoryName = dateFormatter(rows[0].categoryName);
+	    $.post('/resource/videoCategorys',function(result){
+	    	if(result != null && result.length > 0){
+	    		$('#editForm input[name="categoryName"]').html("");
+	    		$.each(result, function(i, item){
+	    			$('#editForm input[name="categoryName"]').append(
+	    					"<div>" + item.id + "</div>" + 
+	                        "<div>" + item.categoryName    + "</div>" +
+	                        "<div>" + item.content + "</div>"		
+	    			);
+	    		});
+	    	}else{
+	    		alert("获取视频分类失败,请重试!");
+	    	}
+	    	alert(result[0].categoryName);
+        },'json'); 
 		var url = '/resource/updateVideo?videoId=' + rows[0].id;
 	} else if (rows.length == 0) {
 		$.messager.alert('提示', '请选择一条修改记录!', 'info');
@@ -174,7 +195,7 @@ function statusFormatter(value){
 	if(value == "0"){
 		return "无效";
 	}else if(value == "1"){
-		return "正常";
+		return "有效";
 	}
 	return "未知";
 }
