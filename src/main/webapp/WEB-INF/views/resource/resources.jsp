@@ -85,8 +85,10 @@
 					<tr>
 						<td>分类：</td>
 						<td>
-							<select name="categoryName">
-								<option value=""></option>
+							<select id="categoryNameSelect" name="categoryName">
+								<c:forEach var="item" items="${videoCategorys}">
+									<option value="${item.id}">${item.categoryName}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
