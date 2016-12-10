@@ -1,42 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-String path = request.getContextPath()+"/";
-%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>断点续传demo</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="<%=path%>css/style.css" />
-  </head>
-  <body>
-    <div id="frame">
-      <script src="<%=path%>js/jquery.min.js"></script>
-      <script src="<%=path%>js/resumable.js"></script>
-      <div class="resumable-error">
-        Your browser, unfortunately, is not supported by Resumable.js. The library requires support for <a href="http://www.w3.org/TR/FileAPI/">the HTML5 File API</a> along with <a href="http://www.w3.org/TR/FileAPI/#normalization-of-params">file slicing</a>.
-      </div>
-      <div class="resumable-drop" ondragenter="jQuery(this).addClass('resumable-dragover');" ondragend="jQuery(this).removeClass('resumable-dragover');" ondrop="jQuery(this).removeClass('resumable-dragover');">
-        Drop video files here to upload or <a class="resumable-browse"><u>select from your computer</u></a>
-      </div>
-      <div class="resumable-progress">
-        <table>
-          <tr>
-            <td width="100%"><div class="progress-container"><div class="progress-bar"></div></div></td>
-            <td class="progress-text" nowrap="nowrap"></td>
-            <td class="progress-pause" nowrap="nowrap">
-              <a href="#" onclick="r.upload(); return(false);" class="progress-resume-link"><img src="<%=path%>images/resume.png" title="Resume upload" /></a>
-              <a href="#" onclick="r.pause(); return(false);" class="progress-pause-link"><img src="<%=path%>images/pause.png" title="Pause upload" /></a>
-            </td>
-          </tr>
-        </table>
-      </div>
-      
-      <ul class="resumable-list"></ul>
-	  
-      <script>
-      	function contains(arr, obj) {  
+function contains(arr, obj) {  
     	    var i = arr.length;  
     	    while (i--) {  
     	        if (arr[i] === obj) {  
@@ -116,10 +78,3 @@ String path = request.getContextPath()+"/";
               $('.resumable-list').html(Math.floor(r.progress()*100) + '%');
             });
         }
-      </script>
-    </div>
-  </body>
-</html>
-
-
-    
