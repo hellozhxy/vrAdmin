@@ -127,8 +127,8 @@ public class ResourceController {
 			if(null == video){
 				return new ModelAndView(new JaxbJsonView(new MessageVo<Video>(false, ErrorCodeEnum.ERROR_10001.getCode(), ErrorCodeEnum.ERROR_10001.getMsg())));
 			}
-			System.out.println(request.getParameter("categoryName"));
 			
+			video.setStatus(Integer.valueOf(request.getParameter("status")));
 			video.setCategoryId(Long.valueOf(request.getParameter("categoryName")));
 			video.setTitle(request.getParameter("title"));
 			video.setDescription(request.getParameter("description"));
@@ -142,8 +142,6 @@ public class ResourceController {
 		}
 		return new ModelAndView(new JaxbJsonView(new MessageVo<Video>(false, ErrorCodeEnum.ERROR_10002.getCode(), ErrorCodeEnum.ERROR_10002.getMsg())));
 	}
-	
-	
 	
 	/**
 	 * Description: 文件资源上传

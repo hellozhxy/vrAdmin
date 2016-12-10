@@ -35,8 +35,8 @@
 					<td>
 					<select id="video_status" name="status">
 					  <option value="" selected>请选择</option>
-					  <option value ="1">审核通过</option>
-					  <option value="0">审核不通过</option>
+					  <option value ="1">有效</option>
+					  <option value="0">无效</option>
 					</select>
 					</td>
 					
@@ -53,7 +53,6 @@
 	<div id="toolbar">  
 	    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="showAddVideo()">新增</a>  
 	    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="showEditVideo()">编辑</a>  
-	    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeVideo()">删除</a>  
 	</div> 
 	
 	<div id="edit-video-window" class="easyui-dialog" closed="true" buttons="#edit-buttons" title="编辑窗口" style="width:500px;height:450px;">
@@ -80,7 +79,12 @@
 					</tr>
 					<tr>
 						<td>状态：</td>
-						<td><input name="status" disabled="true"　readOnly="true"></input></td>
+						<td>
+							<select id="video_status" name="status">
+							  <option value ="1">有效</option>
+							  <option value="0">无效</option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td>分类：</td>

@@ -96,19 +96,19 @@ function showEditVideo(){
 	if (rows.length == 1) {
 		$('#edit-video-window').dialog('open').dialog('setTitle','编辑视频');  
 	    $('#editForm').form('load',rows[0]);
-	    //格式化状态
-	    var status = rows[0].status;
-	    if(status == 0){
-	    	$('#editForm input[name="status"]').attr("value","无效");
-	    }else if(status == 1){
-	    	$('#editForm input[name="status"]').attr("value","有效");
-	    }
 	    //格式化时间格式
 	    $('#editForm input[name="createTime"]').attr("value", dateFormatter(rows[0].createTime));
 	    $('#editForm input[name="publishTime"]').attr("value", dateFormatter(rows[0].publishTime));
 	    //分类
 	    $('#categoryNameSelect option').each(function(){
 			if ($(this).text() == rows[0].categoryName) {  
+                $(this).attr("selected", "selected");
+                return
+            }  
+		});
+	    
+	    $('#video_status option').each(function(){
+			if ($(this).text() == rows[0].status) {  
                 $(this).attr("selected", "selected");
                 return
             }  
@@ -155,7 +155,7 @@ function editVideo(){
             }  
         }  
     });  
-}  
+}
 
 function findResource() {
 	$('#resource-table').datagrid('load', {
