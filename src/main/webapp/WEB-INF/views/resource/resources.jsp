@@ -109,7 +109,7 @@
 						<td><input name="playTimes"></input></td>
 					</tr>
 					<tr>
-						<td>上传时间：</td>
+						<td>创建时间：</td>
 						<td><input name="createTime" disabled="true"　readOnly="true"></input></td>
 					</tr>
 					<tr>

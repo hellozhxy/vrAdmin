@@ -61,7 +61,7 @@ $(function() {
 			sortable : true
 		} , {
 			field : 'createTime',
-			title : '上传时间',
+			title : '创建时间',
 			width : 200,
 			sortable : true,
 			formatter : dateFormatter
