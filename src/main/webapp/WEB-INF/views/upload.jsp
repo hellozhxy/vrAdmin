@@ -36,8 +36,25 @@ String path = request.getContextPath()+"/";
       <ul class="resumable-list"></ul>
 
       <script>
+      	function contains(arr, obj) {  
+    	    var i = arr.length;  
+    	    while (i--) {  
+    	        if (arr[i] === obj) {  
+    	            return true;  
+    	        }  
+    	    }  
+    	    return false;  
+    	}
+      	
+      	function fileSuffix(fileName){
+      		if(fileName.lastIndexOf(".") != -1){
+      			return fileName.substring(fileName.lastIndexOf(".")+1);
+      		}
+      		return null;
+      	}
+      
         var r = new Resumable({
-            target:'/vrAdmin/doupload',
+            target:'/resource/upload',
             chunkSize:1*1024*1024,
             simultaneousUploads:4,
             testChunks: false,
@@ -55,6 +72,11 @@ String path = request.getContextPath()+"/";
 
           // Handle file add event
           r.on('fileAdded', function(file){
+        	  var validFileSuffix = new Array("avi","rmvb","rm","asf","divx","mpg","mpeg","mpe","wmv","mp4","mkv","vob");
+              if(!contains(validFileSuffix, fileSuffix(file.fileName))){
+            	  alert("上传文件不合法!");
+            	  return 
+              }
               // Show progress pabr
               $('.resumable-progress, .resumable-list').show();
               // Show pause, hide resume

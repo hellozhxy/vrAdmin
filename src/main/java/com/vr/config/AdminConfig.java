@@ -14,11 +14,18 @@ public class AdminConfig {
 	/**
 	 * 文件上传目录
 	 */
-	@Value(value = "upload_resource_dir")
+	@Value(value = "${upload_resource_dir}")
 	private String uploadDir;
+	
+	@Value(value = "${video_file_suffix}")
+	private String videoFileSuffix;
 
 	public String getUploadDir() {
 		return uploadDir;
+	}
+
+	public String getVideoFileSuffix() {
+		return videoFileSuffix;
 	}
 	
 }

@@ -47,7 +47,7 @@ $(function() {
 		}, {
 			field : 'keywords',
 			title : '关键字',
-			width : 100,
+			width : 150,
 			sortable : false
 		}, {
 			field : 'path',

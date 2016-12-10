@@ -8,11 +8,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.collect.Lists;
 import com.vr.config.AdminConfig;
 import com.vr.enums.ErrorCodeEnum;
 import com.vr.utils.DateUtil;
@@ -135,12 +138,19 @@ public class ResourceController {
 			video.setKeywords(request.getParameter("keywords"));
 			video.setPlayTimes(Integer.valueOf(request.getParameter("playTimes")));
 			video.setPublishTime(DateUtil.toDate(request.getParameter("publishTime")));
+			video.setPath(request.getParameter("path"));
 			resourceService.updateVideo(video);
 			return new ModelAndView(new JaxbJsonView(new MessageVo<Video>(true, video)));
 		} catch (Exception e) {
 			logger.error("updateVideo_invoke_error.....", e);
 		}
 		return new ModelAndView(new JaxbJsonView(new MessageVo<Video>(false, ErrorCodeEnum.ERROR_10002.getCode(), ErrorCodeEnum.ERROR_10002.getMsg())));
+	}
+	
+	@RequestMapping("/showUpload")
+	public ModelAndView showUpload() {
+		ModelAndView view = new ModelAndView("upload");
+		return view;
 	}
 	
 	/**
@@ -155,12 +165,22 @@ public class ResourceController {
 	@ResponseBody
 	@RequestMapping(value="/upload", method ={RequestMethod.POST, RequestMethod.GET})
 	public void upload(HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, ServletException, IOException{
+		// check file suffix
+		String videoFileSuffixs = adminConfig.getVideoFileSuffix();
+		if(StringUtils.isNotBlank(videoFileSuffixs) && videoFileSuffixs.contains(",")){
+			String[] videoFileSuffixsArr = videoFileSuffixs.split(",");
+			List<String> videoFileSuffixsList = Lists.newArrayList(videoFileSuffixsArr);
+			if(!videoFileSuffixsList.contains(this.fileSuffix(request.getParameter("resumableFilename")))){
+				response.getWriter().print("file_suffix_invalid");
+				return;
+			}
+		}
+		
 		String method = request.getMethod();
 		if(HttpGet.METHOD_NAME.equals(method)){
 			int resumableChunkNumber = getResumableChunkNumber(request);
 
-			ResumableInfo info = getResumableInfo(request);
-
+			ResumableInfo info = getResumableInfo(adminConfig.getUploadDir(), request);
 			if (info.uploadedChunks.contains(new ResumableInfo.ResumableChunkNumber(resumableChunkNumber))) {
 				response.getWriter().print("Uploaded."); // This Chunk has been Uploaded.
 			} else {
@@ -168,9 +188,7 @@ public class ResourceController {
 			}
 		}else if(HttpPost.METHOD_NAME.equals(method)){
 			int resumableChunkNumber = getResumableChunkNumber(request);
-
-			ResumableInfo info = getResumableInfo(request);
-
+			ResumableInfo info = getResumableInfo(adminConfig.getUploadDir(), request);
 			RandomAccessFile raf = new RandomAccessFile(info.resumableFilePath, "rw");
 
 			// Seek to position
@@ -206,8 +224,7 @@ public class ResourceController {
 		return UploadUtils.toInt(request.getParameter("resumableChunkNumber"), -1);
 	}
 
-	private ResumableInfo getResumableInfo(HttpServletRequest request)throws ServletException, UnsupportedEncodingException {
-		String base_dir = adminConfig.getUploadDir();
+	private ResumableInfo getResumableInfo(String base_dir, HttpServletRequest request)throws ServletException, UnsupportedEncodingException {
 		int resumableChunkSize = UploadUtils.toInt(request.getParameter("resumableChunkSize"), -1);
 		long resumableTotalSize = UploadUtils.toLong(request.getParameter("resumableTotalSize"), -1);
 		String resumableIdentifier = request.getParameter("resumableIdentifier");
@@ -215,7 +232,15 @@ public class ResourceController {
 		// String(request.getParameter("resumableFilename").getBytes("ISO8859-1"),"UTF-8");
 		String resumableRelativePath = request.getParameter("resumableRelativePath");
 		// Here we add a ".temp" to every upload file to indicate NON-FINISHED
-		new File(base_dir).mkdir();
+		
+		String uuid = UUID.randomUUID().toString();
+		resumableFilename = new StringBuffer(filePrefix(resumableFilename)).append(uuid).append(".").append(this.fileSuffix(resumableFilename)).toString();
+		resumableRelativePath = new StringBuffer(filePrefix(resumableRelativePath)).append(uuid).append(".").append(this.fileSuffix(resumableRelativePath)).toString();
+				
+		File dir = new File(base_dir);
+		if(!dir.exists()){
+			dir.mkdir();
+		}
 		String resumableFilePath = new File(base_dir, resumableFilename).getAbsolutePath() + ".temp";
 
 		ResumableInfoStorage storage = ResumableInfoStorage.getInstance();
@@ -227,6 +252,20 @@ public class ResourceController {
 			throw new ServletException("Invalid request params.");
 		}
 		return info;
+	}
+	
+	private String fileSuffix(String fileName){
+		if(StringUtils.isNotBlank(fileName) && fileName.lastIndexOf(".") > -1){
+			return fileName.substring(fileName.lastIndexOf(".") + 1); 
+		}
+        return null;
+	}
+	
+	private String filePrefix(String fileName){
+		if(StringUtils.isNotBlank(fileName) && fileName.lastIndexOf(".") > -1){
+			return fileName.substring(0, fileName.lastIndexOf(".")); 
+		}
+        return null;
 	}
 	
 }
