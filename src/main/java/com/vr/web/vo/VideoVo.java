@@ -16,7 +16,7 @@ public class VideoVo extends Video implements Serializable {
 	private String userNickName;
 	
 	private String categoryName;
-
+	
 	public String getUserNickName() {
 		return userNickName;
 	}

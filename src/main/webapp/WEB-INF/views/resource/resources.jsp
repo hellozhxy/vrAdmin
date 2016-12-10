@@ -80,7 +80,7 @@
 					</tr>
 					<tr>
 						<td>状态：</td>
-						<td><input name="status"></input></td>
+						<td><input name="status" disabled="true"　readOnly="true"></input></td>
 					</tr>
 					<tr>
 						<td>分类：</td>
@@ -106,7 +106,7 @@
 					</tr>
 					<tr>
 						<td>上传时间：</td>
-						<td><input name="createTime"></input></td>
+						<td><input name="createTime" disabled="true"　readOnly="true"></input></td>
 					</tr>
 					<tr>
 						<td>发布时间：</td>

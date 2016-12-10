@@ -26,14 +26,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.vr.config.AdminConfig;
+import com.vr.enums.ErrorCodeEnum;
+import com.vr.utils.DateUtil;
 import com.vr.utils.ToolsUtil;
 import com.vr.utils.UploadUtils;
+import com.vr.web.model.Video;
 import com.vr.web.model.VideoCategory;
 import com.vr.web.service.ResourceCategoryService;
 import com.vr.web.service.ResourceService;
 import com.vr.web.upload.ResumableInfo;
 import com.vr.web.upload.ResumableInfoStorage;
 import com.vr.web.view.JaxbJsonView;
+import com.vr.web.vo.MessageVo;
 import com.vr.web.vo.VideoVo;
 
 /**
@@ -116,9 +120,27 @@ public class ResourceController {
 	
 	@ResponseBody
 	@RequestMapping(value="/updateVideo", method ={RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView getVideos(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="videoId", required=true)Long videoId){
-		
-		return new ModelAndView(new JaxbJsonView(null));
+	public ModelAndView updateVideo(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(value="videoId", required=true)Long videoId){
+		try {
+			Video video = resourceService.findVideoById(videoId);
+			if(null == video){
+				return new ModelAndView(new JaxbJsonView(new MessageVo<Video>(false, ErrorCodeEnum.ERROR_10001.getCode(), ErrorCodeEnum.ERROR_10001.getMsg())));
+			}
+			System.out.println(request.getParameter("categoryName"));
+			
+			video.setCategoryId(Long.valueOf(request.getParameter("categoryName")));
+			video.setTitle(request.getParameter("title"));
+			video.setDescription(request.getParameter("description"));
+			video.setKeywords(request.getParameter("keywords"));
+			video.setPlayTimes(Integer.valueOf(request.getParameter("playTimes")));
+			video.setPublishTime(DateUtil.toDate(request.getParameter("publishTime")));
+			resourceService.updateVideo(video);
+			return new ModelAndView(new JaxbJsonView(new MessageVo<Video>(true, video)));
+		} catch (Exception e) {
+			logger.error("updateVideo_invoke_error.....", e);
+		}
+		return new ModelAndView(new JaxbJsonView(new MessageVo<Video>(false, ErrorCodeEnum.ERROR_10002.getCode(), ErrorCodeEnum.ERROR_10002.getMsg())));
 	}
 	
 	

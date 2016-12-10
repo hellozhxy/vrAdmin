@@ -25,6 +25,7 @@
   </sql>
   
   <sql id="Base_Where">
+    <if test="id != null">and id = #{id}</if>
     <if test="userId != null">and user_id = #{userId}</if>
     <if test="status != null">and status = #{status}</if>
     <if test="categoryId != null">and category_id = #{categoryId}</if>

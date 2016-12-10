@@ -86,4 +86,14 @@ public class ResourceServiceImpl implements ResourceService {
 		return videoMapper.findVideoCount(params);
 	}
 
+	@Override
+	public Video findVideoById(Long videoId) {
+		return videoMapper.selectByPrimaryKey(videoId);
+	}
+
+	@Override
+	public int updateVideo(Video video) {
+		return videoMapper.updateByPrimaryKey(video);
+	}
+
 }

@@ -85,6 +85,7 @@ $(function() {
 });
 
 var grid;
+var edit_url;
 
 function showAddVideo(){
 	
@@ -127,7 +128,7 @@ function showEditVideo(){
 	    		alert("获取视频分类失败,请重试!");
 	    	}
         },'json');*/
-		var url = '/resource/updateVideo?videoId=' + rows[0].id;
+	    edit_url = '/resource/updateVideo?videoId=' + rows[0].id;
 	} else if (rows.length == 0) {
 		$.messager.alert('提示', '请选择一条修改记录!', 'info');
 	} else if (rows.length > 1) {
@@ -136,8 +137,8 @@ function showEditVideo(){
 }
 
 function editVideo(){  
-    $('#fm').form('submit',{  
-        url: url,  
+    $('#editForm').form('submit',{  
+        url: edit_url, 
         onSubmit: function(){  
             return $(this).form('validate');  
         },  
@@ -149,8 +150,8 @@ function editVideo(){
                     msg: result.errorMsg  
                 });  
             } else {  
-                $('#dlg').dialog('close'); // close the dialog  
-                $('#dg').datagrid('reload'); // reload the user data  
+                $('#edit-video-window').dialog('close'); // close the dialog  
+                $('#resource-table').datagrid('reload'); // reload the user data  
             }  
         }  
     });  
