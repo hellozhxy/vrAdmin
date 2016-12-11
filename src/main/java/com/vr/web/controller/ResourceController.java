@@ -213,8 +213,14 @@ public class ResourceController {
 			info.uploadedChunks.add(new ResumableInfo.ResumableChunkNumber(resumableChunkNumber));
 			if (info.checkIfUploadFinished()) { // Check if all chunks uploaded, and change filename
 				ResumableInfoStorage.getInstance().remove(info);
-				//response.getWriter().print("All finished.");
-				response.getWriter().print(info.resumableFilePath);
+				response.getWriter().print("All finished.");
+				
+				//update resource full path
+				Video video = resourceService.findVideoById(Long.valueOf(request.getParameter("videoId")));
+				if(null != video){
+					video.setPath(adminConfig.getUploadDir() + File.separator + info.resumableFilename);
+					resourceService.updateVideo(video);
+				}
 			} else {
 				response.getWriter().print("Upload");
 			}
